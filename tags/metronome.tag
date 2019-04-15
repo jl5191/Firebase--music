@@ -5,18 +5,19 @@
 	<script>
 		const BEAT = 500;
 		let metronome;
-		let beatA = new Audio('./sounds/snareA.wav');
-		let beatB = new Audio('./sounds/snareB.wav');
-
+        this.usersNotes=[]
+        this.note=null
 		this.playing = false;
 		this.beatIndex = 0;
 		this.beatCount = 0;
+        this.roomCode=this.parent.roomcode
+
+
+         console.log('hahahha',this)
 
 		metroSound() {
-			beatA.play();
-
 			if (this.beatCount === 3) {
-				beatB.play();
+
 			}
 
 			observer.trigger('onBeat', this.beatIndex);
@@ -34,9 +35,10 @@
 		}
 
 		startMetronome() {
-			metronome = setInterval(this.metroSound, BEAT);
-			this.playing = true;
+            metronome = setInterval(this.metroSound, BEAT);
+            this.playing = true;
 		}
+
 		stopMetronome() {
 			clearInterval(metronome);
 			this.beatCount = 0;

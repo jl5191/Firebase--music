@@ -22,7 +22,7 @@
 					<p>
 						...are in the room.
 					</p>
-					<metronome></metronome>
+					<metronome  roomUser={ roomUsers } ></metronome>
 				</div>
   		</div>
   	</div>
@@ -38,6 +38,7 @@
         observer.on('codeEntered', roomCode=>{
              this.roomcode=roomCode
          })
+
         chooseSound (){
           let note=event.target.value
           this.sound= note+".mp3"
@@ -48,6 +49,8 @@
       })
   })
 }
+
+
 
 		firebase.auth().onAuthStateChanged(userObj => {
             console.log('userrrr',userObj)
@@ -93,6 +96,13 @@
 
 			}).then(doc => {
 				let roomUsersRef = doc.ref.collection('users');
+                let musicRef=doc.ref.collection('music');
+                for (var i=0; i<16; i++){
+                musicRef.doc(i+"").set({
+                    notes:[]
+                })
+            }
+
 				roomUsersRef.doc(this.user.uid).set({
 					id: this.user.uid,
 					name: this.user.displayName,
@@ -117,7 +127,9 @@
 					this.update();
 				});
 			});
-		});
+
+
+        });
 
   </script>
 

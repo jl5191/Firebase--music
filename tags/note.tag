@@ -3,7 +3,6 @@
 	<div class="note { toggledOn:note.play } { cue:cue }" onclick={ toggleNote }></div>
 
 	<script>
-        console.log('itttt',this)
 		this.room = opts.room;
 		this.isUser = opts.isUser;
 		this.roomUser = opts.roomUser;
