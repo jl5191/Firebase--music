@@ -8,7 +8,7 @@
 		this.isUser = opts.isUser;
 		this.roomUser = opts.roomUser;
 		this.cue = false;
-        this.notes=[]
+        tag.newItem=[];
 
 
 		toggleNote(event) {
@@ -19,21 +19,33 @@
                  console.log('iiii',this.i)
 
                 if (this.roomUser.notes[this.i].play){
-                    this.note = this.roomUser.note
-                    this.noteNumber=this.i+""
+                    console.log(this.roomUser.note);
 
-                    console.log('nooooo',this.note)
+                    this.noteNumber=this.i+"";
+                    // var  originalItem = [];
+                    // console.log("origin",originalItem);
+
+                    console.log('this.room.id', this.room.id);
+                    console.log('this.noteNumber', this.noteNumber);
                     let musicRef = database.collection('sound-rooms').doc(this.room.id).collection('music').doc(this.noteNumber);
                     musicRef.get().then(function(doc){
-                      var note = doc.data()
+                      var musicDoc = doc.data();
 
-                      // tag.note.push(note)
-                      console.log('note',tag.note)
-                    })
 
-                    musicRef.set({
-                        notes:tag.note
-                    })
+                      console.log("musicDoc",musicDoc);
+                      console.log("---------x--------", tag.roomUser.note);
+
+                      doc.ref.update({
+                          notes: firebase.firestore.FieldValue.arrayUnion(tag.roomUser.note)
+                      });
+
+                      // originalItem.push(tag.roomUser.note);
+                      // console.log('note',originalItem);
+                    });
+
+                    // musicRef.set({
+                    //     notes: originalItem
+                    // });
                 }
 
 
