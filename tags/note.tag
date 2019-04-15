@@ -7,12 +7,27 @@
 		this.isUser = opts.isUser;
 		this.roomUser = opts.roomUser;
 		this.cue = false;
+        this.notes=[]
+
 
 		toggleNote(event) {
 			if (this.isUser) {
 				let roomUserDoc = database.collection('sound-rooms/' + this.room.id + '/users').doc(this.roomUser.id);
 				this.roomUser.notes[this.i].play = !this.roomUser.notes[this.i].play;
 				roomUserDoc.update(this.roomUser);
+                 console.log('iiii',this.i)
+
+                if (this.roomUser.notes[this.i].play){
+                    this.note=this.roomUser.note
+                    this.noteNumber=this.i+""
+                    console.log('nooooo',this.roomUser.note)
+                    let musicRef = database.collection('sound-rooms').doc(this.room.id).collection('music').doc(this.noteNumber);
+                    musicRef.set({
+                        notes:this.note
+                    })
+                }
+
+
 			}
 		}
 		observer.on('onBeat', beatIndex => {
