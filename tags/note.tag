@@ -20,8 +20,14 @@
                 if (this.roomUser.notes[this.i].play){
                     this.note=this.roomUser.note
                     this.noteNumber=this.i+""
-                    console.log('nooooo',this.roomUser.note)
+
+                    console.log('nooooo',this.note)
                     let musicRef = database.collection('sound-rooms').doc(this.room.id).collection('music').doc(this.noteNumber);
+                    musicRef.get().then(function(doc){
+                        this.notes=doc.data()
+                        console.log('nottttt',this.notes)
+                    })
+
                     musicRef.set({
                         notes:this.note
                     })
