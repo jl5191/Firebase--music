@@ -8,10 +8,10 @@
 					<h1>Room: { room.id }</h1>
                     <select onchange={chooseSound}>
                        <option value="">---</option>
-                       <option value="snareA">Volvo</option>
-                       <option value="snareB">Saab</option>
-                       <option value="just-like-magic">Opel</option>
-                       <option value="oringz-w468">Audi</option>
+                       <option value="snareA.wav">Volvo</option>
+                       <option value="snareB.wav">Saab</option>
+                       <option value="glass-breaking.mp3">Opel</option>
+                       <option value="get-outta-here.mp3">Audi</option>
                     </select>
 					<div each={ roomUser in roomUsers }>
 						<strong>{ roomUser.name }</strong>: { roomUser.id }
@@ -41,7 +41,7 @@
 
         chooseSound (){
           let note=event.target.value
-          this.sound= note+".mp3"
+          this.sound= note
           roomsRef.doc(this.roomcode).get().then(doc => {
               let roomUsersRef = doc.ref.collection('users');
               roomUsersRef.doc(this.user.uid).update({

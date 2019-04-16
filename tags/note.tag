@@ -37,6 +37,7 @@
 
                       doc.ref.update({
                           notes: firebase.firestore.FieldValue.arrayUnion(tag.roomUser.note)
+
                       });
 
                       // originalItem.push(tag.roomUser.note);

@@ -15,28 +15,43 @@
 
          console.log('hahahha',this)
 
+
 		metroSound() {
-			if (this.beatCount === 3) {
-
-			}
-
+		// 	if (this.beatCount < 16) {
 			observer.trigger('onBeat', this.beatIndex);
 
-			if (this.beatCount < 3) {
-				this.beatCount++;
-			} else {
-				this.beatCount = 0;
-			}
-			if (this.beatIndex < 15) {
-				this.beatIndex++;
-			} else {
-				this.beatIndex = 0;
-			}
+			// if (this.beatCount < 15) {
+			// 	this.beatCount++;
+			// } else {
+			// 	this.beatCount = 0;
+			// }
+            this.number= this.beatIndex +""
+            let musicRef = database.collection('sound-rooms').doc(this.roomCode).collection('music').doc(this.number);
+            musicRef.get().then(function(doc){
+                for (var key in doc.data().notes){
+                    console.log('key',key)
+                    var musicPlay = doc.data().notes[key];
+                    if (musicPlay){
+                         beatA = new Audio('./sounds/'+musicPlay)
+                    beatA.play()
+                } else{
+                    beatA=""
+                }
+
+            }
+        })
+        if (this.beatIndex < 16) {
+            this.beatIndex++;
+        } else {
+            this.beatIndex = 0;
+        }
+
 		}
 
 		startMetronome() {
             metronome = setInterval(this.metroSound, BEAT);
             this.playing = true;
+
 		}
 
 		stopMetronome() {
